@@ -1,0 +1,65 @@
+/*
+*
+CommissionEmployee is the super class from which SalaryAndCommissionEmployee Inherits some of its properties and method.
+*
+*/
+class CommissionEmployee{  //This is the super class
+  constructor(firstname,lastname,email){
+    this.fullName = `${firstname} ${lastname}`;
+    this.email = email;
+    this.commissionR = 0;
+    this.grossSales = 0;
+    let earning = 0;  // Abstraction: we declared a local variable here then use methods to set and retrieve the value
+  }
+    
+  setCommissionR(rate){
+    this.commissionR = (rate > 0 && rate < 1) ? rate : 0;
+  }
+  
+  setGrossSale(sales){
+    this.grossSale = (sales > 0) ? sales : 0;
+  }
+
+  setEarning(){
+    earning = this.grossSale * this.commissionR;
+  }
+  getEarning(){ // This can be used to explain encapsulation since the user wouldn't know how the earning is been calculated (s)he just has to interface into the app using this method
+    return earning;
+  }
+  toString(){
+    return `${this.fullName} is a commission employee, with the credentials.
+    Email: ${this.email} and 
+    earning: ${earning}`;
+  }
+}
+
+class SalaryAndCommissionEmployee extends CommissionEmployee{ // This is the sub class
+  constructor(firstname,lastname,email,salary){
+    super(firstname,lastname,email);  // super calls the constructor of the super class
+    this.salary = salary;      // with the this key word we can create an instance variable... Variable that will e accesssible by the objects that will be created fro this class.
+  }
+
+  setEarning(){
+    this.earning = this.salary + (this.grossSale * this.commissionR);
+  }
+  toString(){    // Polymorphism: the properties and methods of the super class can be overriden to express the sub classes properties and/or methods
+    return `${this.fullName} is a salaryAndCommissionEmployee employee, with the credentials.
+    Email: ${this.email} and 
+    earning: ${this.earning}`;
+  }
+}
+
+let employee = new CommissionEmployee('victor','Monday','vkingmaker@gmail.com');
+
+employee.setGrossSale(100000);
+employee.setCommissionR(0.8);
+employee.setEarning();
+console.log(employee.toString());
+
+
+let salaryComEmployee = new SalaryAndCommissionEmployee('victor','Monday','vkingmaker@gmail.com',50000);
+
+salaryComEmployee.setGrossSale(100000);
+salaryComEmployee.setCommissionR(0.8);
+salaryComEmployee.setEarning();
+console.log(salaryComEmployee.toString());
